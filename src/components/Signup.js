@@ -17,8 +17,11 @@ const Signup = () => {
             return;
           }
         try {
-          const response = await axios.post('https://aboutme-seven-blond.vercel.app/users/signup', { email, password, name });
+          const response = await axios.post(`${API_ADDRESS}/users/signup`, { email, password, name });
           if (response.data.token) {
+            const { token, userId } = response.data;
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('userId', userId);
             navigate('/dashboard');
           } else {
             setError(response.data.message);

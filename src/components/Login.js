@@ -16,9 +16,12 @@ const Login = () => {
           return;
         }
         try {
-          const response = await axios.post('https://aboutme-seven-blond.vercel.app/users/login', { email, password });
+          const response = await axios.post(`${API_ADDRESS}/users/login`, { email, password });
           console.log(response)
           if (response.data.token) {
+            const { token, userId } = response.data;
+            sessionStorage.setItem('token', token);
+            sessionStorage.setItem('userId', userId);
             navigate('/dashboard');
           } else {
             setError(response.data.message);

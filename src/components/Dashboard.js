@@ -12,7 +12,9 @@ const Dashboard = () => {
   const generateUniqueUrl = async () => {
     setLoading(true);
     try {
-      const response = await axios.post(`${API_ADDRESS}/users/generate-id`, { userId: 'dummyUserId' });
+      const userId = sessionStorage.getItem('userId');
+
+      const response = await axios.post(`${API_ADDRESS}/users/generate-Id`, { userId: userId });
       const uniqueId = response.data.uniqueId;
       const siteAddress = window.location.origin;
       setUniqueUrl(`${siteAddress}/feedback/${uniqueId}`);
@@ -41,7 +43,12 @@ const Dashboard = () => {
         {uniqueUrl && (
           <Box sx={{ mt: 2 }}>
             <Typography variant="body1">Your unique URL:</Typography>
-            <Typography variant="body2" color="textSecondary">{uniqueUrl}</Typography>
+            <Typography variant="body2" color="textSecondary">
+              
+              <a href={uniqueUrl} target="_blank" rel="noopener noreferrer">{uniqueUrl}</a>
+
+            </Typography>
+
           </Box>
         )}
       </Box>
