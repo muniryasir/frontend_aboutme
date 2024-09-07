@@ -47,9 +47,11 @@ const Feedback = () => {
     setMessage('');
 
     try {
+      
       const response = await axios.post(`${API_ADDRESS}/users/feedback`, { uniqueId:id, feedback });
-      if (response.data.aifeedback) {
-        setExistingFeedback(response.data.aiFeedback);
+      console.log(response)
+      if (response.data.data.aifeedback) {
+        setExistingFeedback(response.data.data.aiFeedback);
       } else {
         setExistingFeedback('Feedback not available yet.');
       }
