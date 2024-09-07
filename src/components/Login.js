@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Link  } from '@mui/material';
+import { TextField, Button, Container, Typography, Link, CircularProgress   } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { API_ADDRESS } from '../utils/config';
@@ -8,10 +8,13 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if (!email || !password) {
           setError('Please fill in all fields.');
           return;
@@ -30,6 +33,8 @@ const Login = () => {
         } catch (err) {
           console.log(err)
           setError(err.response.data.message);
+        } finally {
+          setLoading(false);
         }
       };
 
@@ -56,7 +61,8 @@ const Login = () => {
                 />
                 {error && <Typography color="error">{error}</Typography>}
                 <Button type="submit" variant="contained" color="primary" fullWidth>
-                    Login
+                    
+                    {loading ? <CircularProgress size={24} /> : 'Login'}
                 </Button>
             </form>
             <Typography>

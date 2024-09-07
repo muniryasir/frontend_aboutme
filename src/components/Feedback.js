@@ -48,12 +48,19 @@ const Feedback = () => {
 
     try {
       const response = await axios.post(`${API_ADDRESS}/users/feedback`, { uniqueId:id, feedback });
+      if (response.data.aifeedback) {
+        setExistingFeedback(response.data.aiFeedback);
+      } else {
+        setExistingFeedback('Feedback not available yet.');
+      }
+     
       setMessage('Feedback submitted successfully!');
     } catch (error) {
       console.error('Error submitting feedback:', error);
       setMessage('Failed to submit feedback.');
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   };
 
